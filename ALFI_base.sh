@@ -13,26 +13,36 @@ echo 'Cоздание разделов' #КОРРЕКТИРОВАТЬ ПОД С�
  echo g;
 
  echo n;
- echo ;
  echo;
- echo +300M;
- echo y;
+ echo;
+ echo +128M;
  echo t;
  echo 1;
 
  echo n;
  echo;
  echo;
- echo +30G;
- echo y;
- 
-  
+ echo +2G; #VirtualBox
+ #echo +4G; 
+ echo;
+ echo t;
+ echo;
+ echo 19;
+
  echo n;
  echo;
  echo;
  echo;
- echo y;
-  
+# echo +320G;
+ 
+# echo n;
+# echo;
+# echo;
+# echo;
+# echo t;
+# echo;
+# echo 16;
+
  echo w;
 ) | fdisk /dev/sda
 
@@ -42,8 +52,9 @@ fdisk -l
 echo 'Форматирование дисков'
 
 mkfs.fat -F32 /dev/sda1
-#mkswapon /dev/sda2 КОРРЕКТИРОВАТЬ
+mkswap /dev/sda2
 mkfs.ext4  /dev/sda3
+#mkfs.ext4 /dev/sda4
 
 echo 'Монтирование дисков'
 mount /dev/sda3 /mnt
@@ -52,12 +63,18 @@ mkdir /mnt/boot/efi
 mount /dev/sda1 /mnt/boot/efi
 swapon /dev/sda2
 
-echo 'Выбор зеркал для загрузки.' #УСТАНОВИТЬ И ИСПОЛЬЗОВАТЬ СКРИПТ ПО АВТОМАТИЧЕСКОЙ НАСТРОЙКЕ ЗЕРКАЛ
+echo 'Выбор зеркал для загрузки.'
+pacman -Sy
+pacman -S pacman-contrib --noconfirm
+curl -s "https://www.archlinux.org/mirrorlist/?country=all&protocol=https&ip_version=4&ip_version=6" --output mirrorlist
+sed -i 's/^#Server/Server/' mirrorlist
+rankmirrors -n 6 mirrorlist > /etc/pacman.d/mirrorlist
+rm mirrorlist
 
 echo '3.2 Установка основных пакетов'
-pacstrap /mnt base base-devel bash-complection #ДОБАВИТЬ ПАКЕТЫ ДЛЯ netctl и БЫТЬ МОЖЕТ ДРУГИЕ
+pacstrap /mnt base base-devel
 
 echo '3.3 Настройка системы'
 genfstab -U /mnt >> /mnt/etc/fstab
 
-arch-chroot /mnt #sh -c "$(curl -fsSL git.io/archuefi2.sh)"???
+arch-chroot /mnt /bin/bash #sh -c "$(curl -fsSL 'https://raw.githubusercontent.com/HaskuldrKrionskij/ALFI/master/ALFI_chroot.sh')"???
