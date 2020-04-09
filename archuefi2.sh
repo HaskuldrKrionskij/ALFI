@@ -1,57 +1,53 @@
 #!/bin/bash
-read -p "Введите имя компьютера: " hostname
+read -p "Введите имя компьютера с маленькой(!) буквы: " hostname
 read -p "Введите имя пользователя: " username
 
-echo 'Прописываем имя компьютера'
+echo 'Прописывается имя компьютера'
 echo $hostname > /etc/hostname
-ln -svf /usr/share/zoneinfo/Asia/Yekaterinburg /etc/localtime
+#ln -svf /usr/share/zoneinfo/Asia/Yekaterinburg /etc/localtime???
 
 echo '3.4 Добавляем русскую локаль системы'
-echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
-echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen 
+echo "ru_RU.UTF-8 UTF-8" > /etc/locale.gen
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen 
 
-echo 'Обновим текущую локаль системы'
+echo 'Обновляется текущая локаль системы'
 locale-gen
 
-echo 'Указываем язык системы'
+echo 'Указывается язык системы'
 echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
 
-echo 'Вписываем KEYMAP=ru FONT=cyr-sun16'
-echo 'KEYMAP=ru' >> /etc/vconsole.conf
+echo 'Вписывается KEYMAP=ru и FONT=cyr-sun16'
+echo 'KEYMAP=ru' > /etc/vconsole.conf
 echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
 
-echo 'Создадим загрузочный RAM диск'
+echo 'Создаётся загрузочный RAM диск'
 mkinitcpio -p linux
 
-echo '3.5 Устанавливаем загрузчик'
-pacman -Syy
-pacman -S grub efibootmgr --noconfirm 
+echo '3.5 Устанавливается UEFI загрузчик'
+#pacman -S grub efibootmgr --noconfirm???
 grub-install /dev/sda
 
-echo 'Обновляем grub.cfg'
-grub-mkconfig -o /boot/grub/grub.cfg
+echo 'Обновляется grub.cfg'
+grub-mkconfig -o /boot/grub/grub.cfg #Возможно ли с помощью bash найти и заменить строку???
 
-echo 'Ставим программу для Wi-fi'
-pacman -S dialog wpa_supplicant --noconfirm 
-
-echo 'Добавляем пользователя'
+echo 'Добавляется пользователь'
 useradd -m -g users -G wheel -s /bin/bash $username
 
-echo 'Создаем root пароль'
+echo 'Укажите root пароль'
 passwd
 
-echo 'Устанавливаем пароль пользователя'
+echo 'Укажите пароль пользователя'
 passwd $username
 
 echo 'Устанавливаем SUDO'
-echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
+echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers #Возможно ли с помощью bash найти и заменить строку???
 
 echo 'Раскомментируем репозиторий multilib Для работы 32-битных приложений в 64-битной системе.'
 echo '[multilib]' >> /etc/pacman.conf
-echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
-pacman -Syy
+echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf #Возможно ли с помощью bash найти и заменить строку???
+pacman -Syyuu
 
-echo "Куда устанавливем Arch Linux на виртуальную машину?"
+echo "Arch Linux устанавливается на виртуальную машину?" #ПРОВЕРИТЬ со своим набором
 read -p "1 - Да, 0 - Нет: " vm_setting
 if [[ $vm_setting == 0 ]]; then
   gui_install="xorg-server xorg-drivers xorg-xinit"
@@ -59,26 +55,21 @@ elif [[ $vm_setting == 1 ]]; then
   gui_install="xorg-server xorg-drivers xorg-xinit virtualbox-guest-utils"
 fi
 
-echo 'Ставим иксы и драйвера'
+echo 'Устанавливаются драйвера'
 pacman -S $gui_install
 
-echo "Ставим XFCE"
-pacman -S xfce4 xfce4-goodies --noconfirm
+echo "Устанавливается i3"
+# pacman -S --noconfirm ПОДГОТОВИТЬ НАБОР ПАКЕТОВ
 
-echo 'Cтавим DM'
-pacman -S lxdm --noconfirm
-systemctl enable lxdm
+echo 'Устанавливаются шрифты'
+#pacman -S ttf-liberation ttf-dejavu --noconfirm ПОДГОТОВИТЬ НАБОР ШРИФТОВ А ТАКЖЕ РАССМОТРЕТЬ FONT-AWESOME
 
-echo 'Ставим шрифты'
-pacman -S ttf-liberation ttf-dejavu --noconfirm 
 
-echo 'Ставим сеть'
-pacman -S networkmanager network-manager-applet ppp --noconfirm
+echo 'Устанавливается автозапуск интернета'
+#systemctl enable netctl???
 
-echo 'Подключаем автозагрузку менеджера входа и интернет'
-systemctl enable NetworkManager
-
-echo 'Установка завершена! Перезагрузите систему.'
-echo 'Если хотите подключить AUR, установить мои конфиги XFCE, тогда после перезагрзки и входа в систему, установите wget (sudo pacman -S wget) и выполните команду:'
-echo 'wget git.io/archuefi3.sh && sh archuefi3.sh'
+echo 'Установка завершена!'
+echo 'Перезапуск системы!'
 exit
+umount -R /mnt
+reboot
