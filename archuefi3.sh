@@ -14,8 +14,11 @@ wget https://gist.githubusercontent.com/HaskuldrKrionskij/eb207dad642be5b012c5a3
 sh iYAY.sh
 
 echo 'Установка дополнительных программ и пакетов'
-#sudo pacman -S firefox firefox-i18n-ru ufw f2fs-tools dosfstools ntfs-3g alsa-lib alsa-utils file-roller p7zip unrar gvfs aspell-ru pulseaudio pavucontrol --noconfirm КОРРЕКТИРОВАТЬ ПОД СЕБЯ
-#yay -S --noconfirm ПРИ НЕОБХОДИМОСТИ
+sudo pacman -S chromium firefox Inkscape Transmission-CLI Transmission-GTK UFw GUFw LibreOffice-fresh-ru --noconfirm
+#yay -S google-chrome --noconfirm
+echo 'Установка Tor Browser'
+gpg --auto-key-locate nodefault,wkd --locate-keys torbrowser@torproject.org
+yay -S tor-browser --noconfirm
 
 echo "Установка i3 конфигураций?" #КОРРЕКТИРОВАТЬ ПОД СЕБЯ
 #pacman -S i3-wm i3-gaps i3status sbxkb dmenu pcmanfm ttf-font-awesome feh lxappearance thunar gvfs udiskie xorg-xbacklight ristretto tumbler compton --noconfirm
