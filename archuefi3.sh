@@ -7,10 +7,11 @@ mkdir ~/Images
 mkdir ~/Musics
 mkdir ~/Videos
 
-echo 'Установка AUR (yay)'
+echo 'Установка AUR (YAY)'
 sudo pacman -Syyuu
-#sudo pacman -S wget --noconfirm ПРОВЕРИТЬ УСТАНОВКУ НА НАЧАЛЬНОМ ЭТАПЕ
-#wget git.io/yay-install.sh && sh yay-install.sh --noconfirm СФОРМИРОВАТЬ СВОЙ СКРИПТ
+sudo pacman -S wget --noconfirm #НА ВСЯКИЙ СЛУЧАЙ
+wget https://gist.githubusercontent.com/HaskuldrKrionskij/eb207dad642be5b012c5a36a16823074/raw/6a080c05e9f662ff58dbb9e2bd11ec15276e58de/iYAY.sh
+sh iYAY.sh
 
 echo 'Установка дополнительных программ и пакетов'
 #sudo pacman -S firefox firefox-i18n-ru ufw f2fs-tools dosfstools ntfs-3g alsa-lib alsa-utils file-roller p7zip unrar gvfs aspell-ru pulseaudio pavucontrol --noconfirm КОРРЕКТИРОВАТЬ ПОД СЕБЯ
