@@ -22,8 +22,7 @@ echo 'Cоздание разделов' #КОРРЕКТИРОВАТЬ ПОД С�
  echo n;
  echo;
  echo;
- echo +2G; #VirtualBox
- #echo +4G; 
+ echo +4G; 
  echo;
  echo t;
  echo;
@@ -33,15 +32,15 @@ echo 'Cоздание разделов' #КОРРЕКТИРОВАТЬ ПОД С�
  echo;
  echo;
  echo;
-# echo +320G;
+ echo +320G;
  
-# echo n;
-# echo;
-# echo;
-# echo;
-# echo t;
-# echo;
-# echo 16;
+ echo n;
+ echo;
+ echo;
+ echo;
+ echo t;
+ echo;
+ echo 16;
 
  echo w;
 ) | fdisk /dev/sda
@@ -54,7 +53,7 @@ echo 'Форматирование дисков'
 mkfs.fat -F32 /dev/sda1
 mkswap /dev/sda2
 mkfs.ext4  /dev/sda3
-#mkfs.ext4 /dev/sda4
+mkfs.ext4 /dev/sda4
 
 echo 'Монтирование дисков'
 mount /dev/sda3 /mnt
@@ -68,13 +67,14 @@ pacman -Sy
 pacman -S pacman-contrib --noconfirm
 curl -s "https://www.archlinux.org/mirrorlist/?country=all&protocol=https&ip_version=4&ip_version=6" --output mirrorlist
 sed -i 's/^#Server/Server/' mirrorlist
-rankmirrors -n 6 mirrorlist > /etc/pacman.d/mirrorlist
+rankmirrors -n 17 mirrorlist > /etc/pacman.d/mirrorlist
 rm mirrorlist
 
-echo '3.2 Установка основных пакетов'
+echo 'Установка основных пакетов'
 pacstrap /mnt base base-devel
 
-echo '3.3 Настройка системы'
+echo 'Настройка системы'
 genfstab -U /mnt >> /mnt/etc/fstab
 
+echo 'Полетели в систему!'
 arch-chroot /mnt /bin/bash #sh -c "$(curl -fsSL 'https://raw.githubusercontent.com/HaskuldrKrionskij/ALFI/master/ALFI_chroot.sh')"???
