@@ -3,12 +3,12 @@
 loadkeys ru
 setfont cyr-sun16
 
-#ДОБАВИТЬ ЗАПУК СЕТИ
+wifi-menu -o
 
 echo 'Синхронизация системных часов'
 timedatectl set-ntp true
 
-echo 'Cоздание разделов' #КОРРЕКТИРОВАТЬ ПОД СЕБЯ
+echo 'Cоздание разделов'
 (
  echo g;
 
