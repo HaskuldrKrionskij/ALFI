@@ -37,7 +37,7 @@ echo 'Создаётся загрузочный RAM диск'
 mkinitcpio -p linux
 echo 'Готово!'
 
-echo '3.5 Устанавливается UEFI загрузчик'
+echo 'Устанавливается UEFI загрузчик'
 pacman -S grub efibootmgr --noconfirm
 grub-install --target=x86_64-efi --efi-directory=/boot/efi
 echo 'Готово!'
@@ -64,6 +64,9 @@ echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers #Возможно ли с помощ
 echo 'Раскомментируется репозиторий multilib для работы 32-битных приложений в 64-битной системе'
 echo '[multilib]' >> /etc/pacman.conf
 echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf #Возможно ли с помощью bash найти и заменить строку???
+echo 'Готово!'
+
+echo 'Обновление системы'
 pacman -Syyuu --noconfirm
 echo 'Готово!'
 
@@ -79,18 +82,39 @@ echo 'Устанавливаются шрифты'
 pacman -S ttf-liberation ttf-dejavu ttf-font-awesome --noconfirm
 echo 'Готово!'
 
+echo 'Установка дополнительных программ и пакетов'
+sudo pacman -S Chromium FireFox Inkscape Transmission-CLI Transmission-GTK UFw GUFw LibreOffice-fresh-ru Bash-completion WGet TOR I2Pd --noconfirm
+#yay -S google-chrome --noconfirm
+echo 'Готово!'
+
+echo 'Установка AUR (YAY)'
+sudo pacman -Syyuu
+wget https://gist.githubusercontent.com/HaskuldrKrionskij/eb207dad642be5b012c5a36a16823074/raw/6a080c05e9f662ff58dbb9e2bd11ec15276e58de/iYAY.sh
+sh iYAY.sh
+rm iYAY.sh
+echo 'Готово!'
+
+echo 'Установка Tor Browser'
+gpg --auto-key-locate nodefault,wkd --locate-keys torbrowser@torproject.org
+yay -S tor-browser --noconfirm
+echo 'Готово!'
 
 echo 'Устанавливается автозапуск интернета'
-#systemctl enable netctl???
 systemctl enable netctl.service
+echo 'Готово!'
+
+echo 'Создаются базовые директории'
+mkdir ~/Downloads
+mkdir ~/Documents
+mkdir ~/Images
+mkdir ~/Musics
+mkdir ~/Videos
 echo 'Готово!'
 
 echo 'Обновление системы'
 pacman -Syyuu --noconfirm
 echo 'Готово!'
 
-echo 'Начальная завершена!'
+echo 'Установка завершена!'
 echo 'Перезапуск системы!'
-exit
-umount -R /mnt
 reboot
