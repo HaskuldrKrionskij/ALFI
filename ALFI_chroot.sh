@@ -71,11 +71,11 @@ pacman -Syyuu --noconfirm
 echo 'Готово!'
 
 echo 'Устанавливаются драйвера'
-pacman -S xorg-server xorg-drivers xorg-xinit dialog dhclient dhcpcd wpa_supplicant ppp --noconfirm #virtualbox-guest-utils
+pacman -S xorg-server xorg-drivers xorg-xinit xorg-xbacklight dialog dhclient dhcpcd wpa_supplicant ppp --noconfirm #virtualbox-guest-utils
 echo 'Готово!'
 
 echo "Устанавливается i3"
-# pacman -S i3-wm i3-gaps i3status sbxkb dmenu pcmanfm feh lxappearance thunar gvfs udiskie xorg-xbacklight ristretto tumbler compton --noconfirm ПОДГОТОВИТЬ НАБОР ПАКЕТОВ
+# pacman -S i3 dmenu --noconfirm ПОДГОТОВИТЬ НАБОР ПАКЕТОВ
 echo 'Готово!'
 
 echo 'Устанавливаются шрифты'
@@ -83,7 +83,7 @@ pacman -S ttf-liberation ttf-dejavu ttf-font-awesome --noconfirm
 echo 'Готово!'
 
 echo 'Установка дополнительных программ и пакетов'
-sudo pacman -S Chromium FireFox Inkscape Transmission-CLI Transmission-GTK UFw GUFw LibreOffice-fresh-ru Bash-completion WGet TOR I2Pd --noconfirm
+sudo pacman -S Chromium FireFox Inkscape Transmission-GTK LibreOffice-fresh-ru Bash-completion WGet TOR I2Pd RedShift Thunar Thunar-Volman Thunar-Archive-Plugin Thunar-Media-Tags-Plugin Tumbler ffmpegthumbnailer freetype2 poppler-glib libgsf GVFS gvfs-gphoto2 gvfs-mtp gvfs-nfs feh imagemagick jpegexiforient GParted btrfs-progs dosfstools exfat-utils gpart mtools ntfs-3g polkit gnupg git xarchiver arj binutils bzip2 cpio gzip lha lrzip lz4 lzip lzop p7zip tar unarj unrar unzip xz zip zstd --noconfirm
 #yay -S google-chrome --noconfirm
 echo 'Готово!'
 
