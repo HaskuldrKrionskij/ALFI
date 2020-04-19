@@ -1,7 +1,8 @@
 #!/bin/bash
 
-echo 'Выбор локали'
 loadkeys ru
+echo 'Выбрана локаль'
+echo 'Выбор шрифта'
 setfont cyr-sun16
 echo 'Готово!'
 
@@ -85,7 +86,7 @@ echo 'Готово!'
 rm mirrorlist
 
 echo 'Установка основных пакетов'
-pacstrap /mnt base base-devel
+pacstrap /mnt base base-devel linux linux-firmware nano wget
 echo 'Готово!'
 
 echo 'Настройка системы'

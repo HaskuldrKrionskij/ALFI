@@ -59,56 +59,57 @@ passwd $username
 echo 'Готово!'
 
 echo 'Устанавливается SUDO'
-echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers #Возможно ли с помощью bash найти и заменить строку???
+sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 
 echo 'Раскомментируется репозиторий multilib для работы 32-битных приложений в 64-битной системе'
-echo '[multilib]' >> /etc/pacman.conf
-echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf #Возможно ли с помощью bash найти и заменить строку???
+nano etc/pacman.conf
 echo 'Готово!'
 
 echo 'Обновление системы'
 pacman -Syyuu --noconfirm
 echo 'Готово!'
 
+echo 'Вход в окружение пользователя'
+su $username
+cd
+echo 'Готово!'
+
 echo 'Устанавливаются драйвера'
-pacman -S xorg-server xorg-drivers xorg-xinit xorg-xbacklight dialog dhclient dhcpcd wpa_supplicant ppp --noconfirm #virtualbox-guest-utils
+sudo pacman -S xorg-server xorg-drivers xorg-xinit xorg-xbacklight netctl dialog dhclient dhcpcd wpa_supplicant ppp --noconfirm #virtualbox-guest-utils
 echo 'Готово!'
 
 echo "Устанавливается i3"
-# pacman -S i3 dmenu --noconfirm ПОДГОТОВИТЬ НАБОР ПАКЕТОВ
+sudo pacman -S i3 dmenu --noconfirm
 echo 'Готово!'
 
 echo 'Устанавливаются шрифты'
-pacman -S ttf-liberation ttf-dejavu ttf-font-awesome --noconfirm
+sudo pacman -S ttf-liberation ttf-dejavu ttf-font-awesome --noconfirm
 echo 'Готово!'
 
 echo 'Установка дополнительных программ и пакетов'
-sudo pacman -S Chromium FireFox Inkscape Transmission-GTK LibreOffice-fresh-ru Bash-completion WGet TOR I2Pd RedShift Thunar Thunar-Volman Thunar-Archive-Plugin Thunar-Media-Tags-Plugin Tumbler ffmpegthumbnailer freetype2 poppler-glib libgsf GVFS gvfs-gphoto2 gvfs-mtp gvfs-nfs feh imagemagick jpegexiforient GParted btrfs-progs dosfstools exfat-utils gpart mtools ntfs-3g polkit gnupg git xarchiver arj binutils bzip2 cpio gzip lha lrzip lz4 lzip lzop p7zip tar unarj unrar unzip xz zip zstd --noconfirm
-#yay -S google-chrome --noconfirm
+sudo pacman -S chromium fireFox inkscape transmission-gtk libreoffice-fresh-ru bash-completion wget tor i2pd redshift thunar thunar-volman thunar-archive-plugin thunar-media-tags-plugin tumbler ffmpegthumbnailer freetype2 poppler-glib libgsf gvfs gvfs-gphoto2 gvfs-mtp gvfs-nfs feh imagemagick jpegexiforient GParted btrfs-progs dosfstools exfat-utils gpart mtools ntfs-3g polkit gnupg git xarchiver arj binutils bzip2 cpio gzip lha lrzip lz4 lzip lzop p7zip tar unarj unrar unzip xz zip zstd --noconfirm
 echo 'Готово!'
 
 echo 'Установка AUR (YAY)'
-sudo pacman -Syyuu
-wget https://gist.githubusercontent.com/HaskuldrKrionskij/eb207dad642be5b012c5a36a16823074/raw/6a080c05e9f662ff58dbb9e2bd11ec15276e58de/iYAY.sh
-sh iYAY.sh
-rm iYAY.sh
-echo 'Готово!'
-
-echo 'Установка Tor Browser'
-gpg --auto-key-locate nodefault,wkd --locate-keys torbrowser@torproject.org
-yay -S tor-browser --noconfirm
+sudo pacman -S go --noconfirm
+wget https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz
+tar -xzf yay.tar.gz
+cd yay
+makepkg #-si --skipinteg
+cd ..
+rm -rf yay
 echo 'Готово!'
 
 echo 'Устанавливается автозапуск интернета'
-systemctl enable netctl.service
+sudo systemctl enable netctl.service
 echo 'Готово!'
 
 echo 'Создаются базовые директории'
-mkdir ~/Downloads
-mkdir ~/Documents
-mkdir ~/Images
-mkdir ~/Musics
-mkdir ~/Videos
+mkdir Downloads
+mkdir Documents
+mkdir Images
+mkdir Musics
+mkdir Videos
 echo 'Готово!'
 
 echo 'Обновление системы'
@@ -117,4 +118,7 @@ echo 'Готово!'
 
 echo 'Установка завершена!'
 echo 'Перезапуск системы!'
+exit
+exit
+umount -R /mnt
 reboot
