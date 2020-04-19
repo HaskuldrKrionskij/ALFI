@@ -6,22 +6,27 @@ mkdir ~/Documents
 mkdir ~/Images
 mkdir ~/Musics
 mkdir ~/Videos
+echo 'Готово!'
 
 echo 'Установка AUR (YAY)'
 sudo pacman -Syyuu
 sudo pacman -S wget --noconfirm #НА ВСЯКИЙ СЛУЧАЙ
 wget https://gist.githubusercontent.com/HaskuldrKrionskij/eb207dad642be5b012c5a36a16823074/raw/6a080c05e9f662ff58dbb9e2bd11ec15276e58de/iYAY.sh
 sh iYAY.sh
+rm iYAY.sh
+echo 'Готово!'
 
 echo 'Установка дополнительных программ и пакетов'
-sudo pacman -S chromium firefox Inkscape Transmission-CLI Transmission-GTK UFw GUFw LibreOffice-fresh-ru --noconfirm
+sudo pacman -S chromium firefox Inkscape Transmission-CLI Transmission-GTK UFw GUFw LibreOffice-fresh-ru bash-completion --noconfirm
 #yay -S google-chrome --noconfirm
+echo 'Готово!'
+
 echo 'Установка Tor Browser'
 gpg --auto-key-locate nodefault,wkd --locate-keys torbrowser@torproject.org
 yay -S tor-browser --noconfirm
+echo 'Готово!'
 
 echo "Установка i3 конфигураций?" #КОРРЕКТИРОВАТЬ ПОД СЕБЯ
-#pacman -S i3-wm i3-gaps i3status sbxkb dmenu pcmanfm ttf-font-awesome feh lxappearance thunar gvfs udiskie xorg-xbacklight ristretto tumbler compton --noconfirm
 #yay -S polybar
 #wget https://github.com/ordanax/dots/raw/master/i3wm_v_2/i3wm_config.tar.gz
 #sudo rm -rf ~/.config/i3/*

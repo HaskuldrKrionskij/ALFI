@@ -1,12 +1,17 @@
 #!/bin/bash
 
+echo 'Выбор локали'
 loadkeys ru
 setfont cyr-sun16
+echo 'Готово!'
 
+echo 'Запуск Wi-Fi'
 wifi-menu -o
+echo 'Готово!'
 
-echo 'Синхронизация системных часов'
+echo 'Включение системных часов'
 timedatectl set-ntp true
+echo 'Готово!'
 
 echo 'Cоздание разделов'
 (
@@ -44,16 +49,18 @@ echo 'Cоздание разделов'
 
  echo w;
 ) | fdisk /dev/sda
+echo 'Готово!'
 
 echo 'Разметка диска:'
 fdisk -l
+echo 'Готово!'
 
 echo 'Форматирование дисков'
-
 mkfs.fat -F32 /dev/sda1
 mkswap /dev/sda2
 mkfs.ext4  /dev/sda3
 mkfs.ext4 /dev/sda4
+echo 'Готово!'
 
 echo 'Монтирование дисков'
 mount /dev/sda3 /mnt
@@ -61,20 +68,29 @@ mkdir /mnt/boot/
 mkdir /mnt/boot/efi
 mount /dev/sda1 /mnt/boot/efi
 swapon /dev/sda2
+echo 'Готово!'
 
-echo 'Выбор зеркал для загрузки.'
+echo 'ВЫБОР БЫСТРЕЙШИХ ЗЕРКАЛ ДЛЯ ЗАГРУЗКИ'
+echo 'Обновление базы'
 pacman -Sy
+echo 'Установка сортировщика зеркал'
 pacman -S pacman-contrib --noconfirm
+echo 'Скачиваем список подходящих зеркал'
 curl -s "https://www.archlinux.org/mirrorlist/?country=all&protocol=https&ip_version=4&ip_version=6" --output mirrorlist
+echo 'Чистка списка зеркал от #'
 sed -i 's/^#Server/Server/' mirrorlist
+echo 'Соритровка списка зеркал по скорости..'
 rankmirrors -n 17 mirrorlist > /etc/pacman.d/mirrorlist
+echo 'Готово!'
 rm mirrorlist
 
 echo 'Установка основных пакетов'
 pacstrap /mnt base base-devel
+echo 'Готово!'
 
 echo 'Настройка системы'
 genfstab -U /mnt >> /mnt/etc/fstab
+echo 'Готово!'
 
 echo 'Полетели в систему!'
 arch-chroot /mnt /bin/bash #sh -c "$(curl -fsSL 'https://raw.githubusercontent.com/HaskuldrKrionskij/ALFI/master/ALFI_chroot.sh')"???
