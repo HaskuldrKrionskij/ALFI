@@ -16,7 +16,7 @@ sudo pacman -S ttf-liberation ttf-dejavu ttf-font-awesome --noconfirm
 echo 'Готово!'
 
 echo 'Установка дополнительных программ и пакетов'
-sudo pacman -S bash-completion pulseaudio pulseaudio-alsa chromium firefox inkscape transmission-gtk wget tor i2pd redshift thunar thunar-volman thunar-archive-plugin thunar-media-tags-plugin tumbler ffmpegthumbnailer freetype2 poppler-glib libgsf gvfs gvfs-gphoto2 gvfs-mtp gvfs-nfs feh imagemagick jpegexiforient gparted btrfs-progs dosfstools exfat-utils gpart mtools ntfs-3g polkit gnupg git xarchiver arj binutils bzip2 cpio gzip lha lrzip lz4 lzip lzop p7zip tar unarj unrar unzip xz zip zstd keepassxc mousepad hexchat --noconfirm
+sudo pacman -S bash-completion pulseaudio pulseaudio-alsa chromium firefox telegram-desktop inkscape transmission-gtk wget tor i2pd redshift thunar thunar-volman thunar-archive-plugin thunar-media-tags-plugin tumbler ffmpegthumbnailer freetype2 poppler-glib libgsf gvfs gvfs-gphoto2 gvfs-mtp gvfs-nfs feh imagemagick jpegexiforient gparted btrfs-progs dosfstools exfat-utils gpart mtools ntfs-3g polkit gnupg git xarchiver arj binutils bzip2 cpio gzip lha lrzip lz4 lzip lzop p7zip tar unarj unrar unzip xz zip zstd keepassxc mousepad hexchat --noconfirm
 echo 'Готово!'
 
 echo 'Установка AUR (YAY)'
