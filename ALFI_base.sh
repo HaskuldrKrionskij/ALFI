@@ -1,9 +1,10 @@
 #!/bin/bash
 
+echo 'Vybor lokali i shrifta'
 loadkeys ru
-echo 'Выбрана локаль'
-echo 'Выбор шрифта'
 setfont cyr-sun16
+export LANG='ru_RU.UTF-8'
+locale-gen
 echo 'Готово!'
 
 echo 'Запуск Wi-Fi'
@@ -79,7 +80,7 @@ pacman -S pacman-contrib --noconfirm
 echo 'Скачиваем список подходящих зеркал'
 curl -s "https://www.archlinux.org/mirrorlist/?country=all&protocol=https&ip_version=4&ip_version=6" --output mirrorlist
 echo 'Чистка списка зеркал от #'
-sed -i 's/^#Server/Server/' mirrorlist
+sed -i 's/#Server/Server/' mirrorlist
 echo 'Соритровка списка зеркал по скорости..'
 rankmirrors -n 17 mirrorlist > /etc/pacman.d/mirrorlist
 echo 'Готово!'
@@ -93,5 +94,4 @@ echo 'Настройка системы'
 genfstab -U /mnt >> /mnt/etc/fstab
 echo 'Готово!'
 
-echo 'Полетели в систему!'
-arch-chroot /mnt /bin/bash #sh -c "$(curl -fsSL 'https://raw.githubusercontent.com/HaskuldrKrionskij/ALFI/master/ALFI_chroot.sh')"???
+echo 'Пора!'

@@ -16,6 +16,7 @@ echo localectl set-keymap ru
 echo 'Готово!'
 
 echo 'Добавляется локаль системы'
+setfont cyr-sun16
 echo "ru_RU.UTF-8 UTF-8" > /etc/locale.gen
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 echo 'Готово!' 
@@ -25,12 +26,17 @@ locale-gen
 echo 'Готово!'
 
 echo 'Указывается язык системы'
+localectl set-locale 'LANG=ru_RU.UTF-8'
 echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
 echo 'Готово!'
 
 echo 'Вписывается KEYMAP=ru и FONT=cyr-sun16'
 echo 'KEYMAP=ru' > /etc/vconsole.conf
 echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
+echo 'Готово!'
+
+echo 'Обновляется конфиг загрузочного RAM диска'
+nano /etc/mkinitcpio.conf
 echo 'Готово!'
 
 echo 'Создаётся загрузочный RAM диск'
@@ -43,7 +49,8 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi
 echo 'Готово!'
 
 echo 'Обновляется grub.cfg'
-grub-mkconfig -o /boot/grub/grub.cfg #Возможно ли с помощью bash найти и заменить строку???
+grub-mkconfig -o /boot/grub/grub.cfg
+nano /boot/grub/grub.cfg
 echo 'Готово!'
 
 echo 'Добавляется пользователь'
@@ -60,6 +67,7 @@ echo 'Готово!'
 
 echo 'Устанавливается SUDO'
 sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+echo 'Готово!'
 
 echo 'Раскомментируется репозиторий multilib для работы 32-битных приложений в 64-битной системе'
 nano etc/pacman.conf
@@ -69,56 +77,5 @@ echo 'Обновление системы'
 pacman -Syyuu --noconfirm
 echo 'Готово!'
 
-echo 'Вход в окружение пользователя'
-su $username
-cd
-echo 'Готово!'
-
-echo 'Устанавливаются драйвера'
-sudo pacman -S xorg-server xorg-drivers xorg-xinit xorg-xbacklight netctl dialog dhclient dhcpcd wpa_supplicant ppp --noconfirm #virtualbox-guest-utils
-echo 'Готово!'
-
-echo "Устанавливается i3"
-sudo pacman -S i3 dmenu --noconfirm
-echo 'Готово!'
-
-echo 'Устанавливаются шрифты'
-sudo pacman -S ttf-liberation ttf-dejavu ttf-font-awesome --noconfirm
-echo 'Готово!'
-
-echo 'Установка дополнительных программ и пакетов'
-sudo pacman -S chromium fireFox inkscape transmission-gtk libreoffice-fresh-ru bash-completion wget tor i2pd redshift thunar thunar-volman thunar-archive-plugin thunar-media-tags-plugin tumbler ffmpegthumbnailer freetype2 poppler-glib libgsf gvfs gvfs-gphoto2 gvfs-mtp gvfs-nfs feh imagemagick jpegexiforient GParted btrfs-progs dosfstools exfat-utils gpart mtools ntfs-3g polkit gnupg git xarchiver arj binutils bzip2 cpio gzip lha lrzip lz4 lzip lzop p7zip tar unarj unrar unzip xz zip zstd --noconfirm
-echo 'Готово!'
-
-echo 'Установка AUR (YAY)'
-sudo pacman -S go --noconfirm
-wget https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz
-tar -xzf yay.tar.gz
-cd yay
-makepkg #-si --skipinteg
-cd ..
-rm -rf yay
-echo 'Готово!'
-
-echo 'Устанавливается автозапуск интернета'
-sudo systemctl enable netctl.service
-echo 'Готово!'
-
-echo 'Создаются базовые директории'
-mkdir Downloads
-mkdir Documents
-mkdir Images
-mkdir Musics
-mkdir Videos
-echo 'Готово!'
-
-echo 'Обновление системы'
-pacman -Syyuu --noconfirm
-echo 'Готово!'
-
-echo 'Установка завершена!'
-echo 'Перезапуск системы!'
-exit
-exit
-umount -R /mnt
-reboot
+echo 'Необходимо авторизоваться Пользователем'
+echo 'su %user%'
